@@ -1,2 +1,20 @@
-# EduRoom-Navigator
-EduRoom Navigator is a smart application that helps students, faculty, and visitors easily locate classrooms and facilities within educational institutions. It provides simple search, clear navigation, and a user-friendly interface to reduce confusion and save time on large campuses.
+# EduRoom Navigator
+
+EduRoom Navigator is a smart web application that helps students, faculty, and visitors easily locate classrooms and facilities within educational institutions.
+
+## Features
+- Easy navigation system
+- Dashboard interface
+- User-friendly design
+
+## Tech Stack
+- HTML
+- CSS
+- JavaScript
+
+## How to Run
+1. Download the project
+2. Open index.html in your browser
+
+## Author
+Srishti Rai
