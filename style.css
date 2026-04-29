@@ -1,0 +1,779 @@
+/* =========================================
+   1. RESET & GLOBALS
+   ========================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+:root {
+  --primary-color: #f39c12; /* Brand Orange */
+  --secondary-color: #ffffff;
+  --text-color: #333;
+  --bg-light: #f9f9f9;
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --dark-bg: #2c3e50;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  scroll-behavior: smooth;
+  background-color: var(--bg-light);
+}
+
+/* =========================================
+   2. NAVBAR
+   ========================================= */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #222;
+  color: white;
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.navbar .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links li a {
+  color: rgba(255,255,255,0.8);
+  text-decoration: none;
+  transition: color 0.3s;
+  font-weight: 500;
+}
+
+.nav-links li a:hover {
+  color: var(--primary-color);
+}
+
+.login-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  cursor: pointer;
+  border-radius: 25px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+  background-color: #e67e22;
+  transform: translateY(-2px);
+}
+
+/* =========================================
+   3. HERO SECTION
+   ========================================= */
+.hero-section {
+  height: 112vh;
+  background: url('hero.png') center/cover no-repeat;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-overlay {
+  background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.7));
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-content {
+  position: relative;
+  color: white;
+  text-align: center;
+  z-index: 1;
+  padding: 20px;
+  animation: fadeInUp 1s ease-in-out;
+  height: 24vh;
+}
+
+.hero-content h1 {
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-button {
+  padding: 15px 35px;
+  font-size: 1.1rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: all 0.3s;
+  font-weight: bold;
+  box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+}
+
+.hero-login-btn {
+  display: none;
+}
+
+@keyframes fadeInUp {
+  0% { transform: translateY(40px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* =========================================
+   4. SECTION UTILITIES
+   ========================================= */
+.section {
+  padding: 80px 20px;
+  text-align: center;
+  background-color: white;
+}
+
+.section:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--dark-bg);
+  position: relative;
+  display: inline-block;
+}
+
+.section-subtitle {
+  color: #777;
+  margin-bottom: 3rem;
+  font-size: 1.1rem;
+}
+
+/* =========================================
+   5. REDESIGNED ABOUT SECTION
+   ========================================= */
+.about-section {
+  background-color: white;
+  padding: 100px 20px;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.about-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.about-header h2::after {
+  content: '';
+  display: block;
+  width: 50%;
+  height: 4px;
+  background: var(--primary-color);
+  margin: 8px auto 0;
+  border-radius: 2px;
+}
+
+.about-grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+}
+
+/* About Text */
+.about-text {
+  flex: 1;
+  min-width: 300px;
+  text-align: left;
+}
+
+.about-text h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: var(--dark-bg);
+}
+
+.about-text p {
+  color: #555;
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
+  font-size: 1rem;
+}
+
+.stats-row {
+  display: flex;
+  gap: 40px;
+  margin-top: 20px;
+}
+
+.stat-item {
+  text-align: left;
+}
+
+.stat-num {
+  display: block;
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.stat-desc {
+  font-size: 0.9rem;
+  color: #777;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Founder Card */
+.about-founder {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  justify-content: center;
+}
+
+.founder-card {
+  background: white;
+  width: 320px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.3s ease;
+  border: 1px solid #eee;
+}
+
+.founder-card:hover {
+  transform: translateY(-10px);
+}
+
+.founder-img {
+  background: linear-gradient(135deg, #f39c12, #e67e22);
+  padding: 30px 0;
+  
+}
+
+.founder-img img {
+  width: 121px;
+  height: 121px;
+  border-radius: 50%;
+  border: 4px solid white;
+  object-fit: cover;
+  background-color: white;
+  align-items: center;
+}
+
+.founder-info {
+  padding: 25px;
+}
+
+.founder-info h3 {
+  font-size: 1.4rem;
+  color: var(--dark-bg);
+  margin-bottom: 5px;
+}
+
+.founder-info .position {
+  display: block;
+  color: var(--primary-color);
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+}
+
+.founder-info p {
+  font-style: italic;
+  color: #666;
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+}
+
+.founder-contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--dark-bg);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 10px 20px;
+  border: 1px solid #ddd;
+  border-radius: 30px;
+  transition: all 0.3s;
+}
+
+.founder-contact:hover {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+/* =========================================
+   6. REDESIGNED GALLERY SECTION
+   ========================================= */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.gallery-card {
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  height: 250px;
+  cursor: pointer;
+}
+
+.gallery-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.gallery-card:hover img {
+  transform: scale(1.1);
+}
+
+.card-overlay {
+  position: absolute;
+  bottom: -100%; /* Hidden initially */
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  transition: bottom 0.4s ease;
+}
+
+.gallery-card:hover .card-overlay {
+  bottom: 0; /* Slide up on hover */
+}
+
+.card-overlay h3 { font-size: 1.5rem; margin-bottom: 5px; }
+.card-overlay p { margin-bottom: 15px; font-size: 0.9rem; }
+.card-overlay button {
+  padding: 8px 20px;
+  background: var(--primary-color);
+  border: none;
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* =========================================
+   7. REDESIGNED CONTACT SECTION
+   ========================================= */
+.contact-section {
+  background-color: #f8f9fa;
+}
+
+.contact-wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.contact-form .form-group {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.contact-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--dark-bg);
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.3s;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: var(--primary-color);
+}
+
+.send-btn {
+  width: 100%;
+  padding: 15px;
+  background-color: var(--dark-bg);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background 0.3s;
+}
+
+.send-btn:hover {
+  background-color: var(--primary-color);
+}
+
+/* =========================================
+   8. FOOTER SECTION
+   ========================================= */
+.site-footer {
+  background-color: #1a1a1a;
+  color: #ccc;
+  padding: 60px 0 20px;
+  font-size: 0.9rem;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+  margin-bottom: 40px;
+  padding: 0 20px;
+}
+
+.footer-col h3 {
+  color: white;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.footer-col h3::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: var(--primary-color);
+  margin-top: 10px;
+}
+
+.footer-col ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-col ul li {
+  margin-bottom: 10px;
+}
+
+.footer-col ul li a {
+  color: #ccc;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-col ul li a:hover {
+  color: var(--primary-color);
+  padding-left: 5px;
+}
+
+.footer-col p {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-col a {
+  color: #ccc;
+  text-decoration: none;
+}
+
+.social-links {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.social-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  background: #333;
+  color: white;
+  border-radius: 50%;
+  transition: background 0.3s;
+}
+
+.social-links a:hover {
+  background: var(--primary-color);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid #333;
+}
+
+/* =========================================
+   9. GLASSMORPHISM MODAL STYLES (Existing)
+   ========================================= */
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 2000; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  background-color: rgba(0,0,0,0.4); 
+  display: none; /* Flex applied via JS */
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+}
+
+.modal.show {
+  display: flex;
+  animation: fadeIn 0.3s;
+}
+
+.close-modal-btn {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 40px;
+  color: white;
+  cursor: pointer;
+  z-index: 2001;
+  transition: color 0.3s;
+}
+
+.close-modal-btn:hover {
+  color: var(--primary-color);
+}
+
+/* Login Box Structure with Scrolling */
+.login_box {
+  position: relative;
+  width: 450px;
+  backdrop-filter: blur(25px);
+  background: rgba(255, 255, 255, 0.1); 
+  border: 2px solid var(--glass-border);
+  border-radius: 15px;
+  padding: 7.5em 2.5em 4em 2.5em;
+  color: white; 
+  box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.3);
+  
+  /* Scrollable Logic */
+  max-height: 85vh; /* Max height relative to viewport */
+  overflow-y: auto; /* Enable scroll if content overflows */
+  
+  /* Hide Scrollbar Standard (Firefox) */
+  scrollbar-width: none;
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+/* Hide Scrollbar (Webkit - Chrome, Safari, Edge) */
+.login_box::-webkit-scrollbar {
+  display: none;
+}
+
+.login-header {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255,255,255, 0.9);
+  width: 140px;
+  height: 70px;
+  border-radius: 0 0 20px 20px;
+}
+
+.login-header span {
+  font-size: 30px;
+  color: #333;
+  font-weight: 600;
+}
+
+.login-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -30px;
+  width: 30px;
+  height: 30px;
+  border-top-right-radius: 50%;
+  box-shadow: 15px 0 0 0 rgba(255,255,255, 0.9);
+}
+
+.login-header::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -30px;
+  width: 30px;
+  height: 30px;
+  border-top-left-radius: 50%;
+  box-shadow: -15px 0 0 0 rgba(255,255,255, 0.9);
+}
+
+/* Inputs */
+.input_box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
+}
+
+.input-field {
+  width: 100%;
+  height: 55px;
+  font-size: 16px;
+  background: transparent;
+  color: white;
+  padding-inline: 20px 50px;
+  border: 2px solid rgba(255,255,255,0.5);
+  border-radius: 30px;
+  outline: none;
+  transition: 0.3s;
+}
+
+.input-field:focus, .input-field:valid {
+  border-color: var(--primary-color);
+}
+
+.label {
+  position: absolute;
+  top: 15px;
+  left: 20px;
+  transition: 0.2s;
+  color: white;
+  pointer-events: none;
+}
+
+.input-field:focus ~ .label,
+.input-field:valid ~ .label {
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  font-size: 14px;
+  background-color: var(--primary-color);
+  border-radius: 30px;
+  color: white;
+  padding: 0 10px;
+}
+
+.icon {
+  position: absolute;
+  top: 18px;
+  right: 25px;
+  font-size: 20px;
+  color: white;
+}
+
+/* Remember / Forgot */
+.remember-forgot {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.remember-forgot a {
+  color: white;
+  text-decoration: underline;
+}
+
+/* Submit */
+.input-submit {
+  width: 100%;
+  height: 50px;
+  background: white;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: 0.3s;
+  color: #333;
+}
+
+.input-submit:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+/* Register */
+.register {
+  text-align: center;
+  color: white;
+}
+
+.register a {
+  font-weight: 600;
+  color: white;
+  text-decoration: underline;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media only screen and (max-width: 564px) {
+  .login_box {
+    width: 100%;
+    padding: 7.5em 1.5em 4em 1.5em;
+  }
+}
+

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User Dashboard - EduRoom Navigator</title>
+  
+  <!-- CSS Links -->
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="dashboard.css"/>
+  
+  <!-- Boxicons Library -->
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  
+  <!-- Leaflet CSS (Map) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+  
+  <!-- Leaflet JS (Map) -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+</head>
+<body>
+
+  <div class="dashboard-layout">
+    
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">EduRoom Navigator</div>
+      <ul class="sidebar-menu">
+        <li class="active" onclick="switchSection('dashboard', this)">
+          <a href="#"><i class='bx bxs-dashboard'></i> Dashboard</a>
+        </li>
+        <li onclick="switchSection('saved', this)">
+          <a href="#"><i class='bx bx-heart'></i> Saved</a>
+        </li>
+        <li onclick="switchSection('messages', this)">
+          <a href="#"><i class='bx bx-message-square-detail'></i> Messages</a>
+        </li>
+        <li onclick="switchSection('settings', this)">
+          <a href="#"><i class='bx bx-cog'></i> Settings</a>
+        </li>
+      </ul>
+      <div class="sidebar-footer">
+        <button onclick="logoutUser()"><i class='bx bx-log-out'></i> Logout</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      
+      <!-- Topbar -->
+      <header class="dashboard-topbar">
+        <h2 id="page-title">Overview</h2>
+        <div class="topbar-actions">
+          <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search location..." />
+            <i class='bx bx-search'></i>
+          </div>
+          <!-- Filter Toggle Button -->
+          <button class="filter-btn" onclick="toggleFilterPanel()">
+            <i class='bx bx-filter-alt'></i> Filters
+          </button>
+          <button class="add-room-btn" onclick="openAddRoomModal()">
+            <i class='bx bx-plus-circle'></i> Post Room
+          </button>
+        </div>
+      </header>
+
+      <!-- === FILTER PANEL (Hidden by default) === -->
+      <div id="filterPanel" class="filter-panel">
+        <!-- Price Filter -->
+        <div class="filter-group">
+          <label>Max Price: <span id="priceValue">$1000</span></label>
+          <input type="range" id="priceRange" min="100" max="2000" value="1000" oninput="updatePriceLabel(this.value); applyFilters()">
+        </div>
+        
+        <!-- Amenities Filter -->
+        <div class="filter-group">
+          <label>Amenities</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" value="wifi" onchange="applyFilters()"> Wi-Fi</label>
+            <label><input type="checkbox" value="ac" onchange="applyFilters()"> AC</label>
+            <label><input type="checkbox" value="gym" onchange="applyFilters()"> Gym</label>
+          </div>
+        </div>
+
+        <!-- Sort Order -->
+        <div class="filter-group">
+          <label>Sort By</label>
+          <select id="sortOrder" onchange="applyFilters()">
+            <option value="newest">Newest First</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- === SECTION 1: DASHBOARD (Overview) === -->
+      <section id="dashboard-section" class="content-section">
+        <!-- Stats -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <h3>Total Views</h3>
+            <p>1,240</p>
+            <i class='bx bx-show-alt card-icon'></i>
+          </div>
+          <div class="stat-card">
+            <h3>Active Listings</h3>
+            <p id="activeListingsCount">1</p>
+            <i class='bx bx-home-alt card-icon'></i>
+          </div>
+          <div class="stat-card">
+            <h3>Messages</h3>
+            <p id="msgCount">3 New</p>
+            <i class='bx bx-message-rounded-dots card-icon'></i>
+          </div>
+        </div>
+
+        <!-- Rooms Grid -->
+        <h3 class="section-title">Your Listings</h3>
+        <div class="dashboard-grid" id="roomsGrid">
+          <!-- Default Room Card -->
+          <div class="room-card" 
+               data-id="room-1"
+               data-title="Sunny Apartment" 
+               data-price="500" 
+               data-date="2023-10-01"
+               data-amenities="wifi,ac"
+               data-lat="40.7128" 
+               data-lng="-74.0060" 
+               data-address="New York, NY">
+            <img src="hero.png" alt="Room Image" />
+            <div class="card-details">
+              <div class="card-header">
+                <h3>Sunny Apartment</h3>
+                <i class='bx bx-heart save-btn' onclick="toggleSave(this)"></i>
+              </div>
+              <p class="price">$500/month</p>
+              <p class="address"><i class='bx bx-map'></i> New York, NY</p>
+              
+              <!-- Amenity Icons Display -->
+              <div class="amenities-display">
+                <i class='bx bx-wifi' title="WiFi"></i>
+                <i class='bx bx-wind' title="AC"></i>
+              </div>
+
+              <p class="status pending">Status: Pending</p>
+              <button onclick="viewDetails(this)">View Details & Map</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- === SECTION 2: SAVED ROOMS === -->
+      <section id="saved-section" class="content-section" style="display: none;">
+        <div class="empty-state" id="emptySavedState" style="text-align:center; padding: 50px; color:#888;">
+          <i class='bx bx-heart' style="font-size: 50px; margin-bottom: 20px;"></i>
+          <p>You haven't saved any rooms yet.</p>
+        </div>
+        <div class="dashboard-grid" id="savedGrid">
+          <!-- Saved items will be injected here via JS -->
+        </div>
+      </section>
+      
+      <!-- === SECTION 3: MESSAGES === -->
+      <section id="messages-section" class="content-section" style="display: none;">
+         <div class="messages-container">
+          <!-- Message List -->
+          <div class="message-list" id="inboxList">
+            
+            <!-- Message Item 1: John (Clickable) -->
+            <div class="msg-item active" onclick="switchChat('user1', this)">
+              <img src="https://i.pravatar.cc/150?img=3" alt="User">
+              <div class="msg-info">
+                <h4>John Doe</h4>
+                <p>Is the room still available?</p>
+              </div>
+              <span class="msg-time">2m ago</span>
+            </div>
+            
+            <!-- Message Item 2: Jane (Clickable) -->
+            <div class="msg-item" onclick="switchChat('user2', this)">
+              <img src="https://i.pravatar.cc/150?img=5" alt="User">
+              <div class="msg-info">
+                <h4>Jane Smith</h4>
+                <p>Can I schedule a visit for tomorrow?</p>
+              </div>
+              <span class="msg-time">1h ago</span>
+            </div>
+
+          </div>
+          
+          <!-- Chat Area -->
+          <div class="chat-area">
+            <div class="chat-header">
+              <h4>John Doe</h4>
+              <span>Online</span>
+            </div>
+            <!-- Added ID for dynamic rendering -->
+            <div class="chat-messages" id="chatWindow">
+              <div class="bubble received">Hi, I saw your listing for the Sunny Apartment.</div>
+              <div class="bubble received">Is it still available?</div>
+              <div class="bubble sent">Yes, it is! When would you like to see it?</div>
+            </div>
+            <div class="chat-input">
+              <input type="text" id="chatInput" placeholder="Type a message..." onkeypress="handleChatKey(event)">
+              <button onclick="sendMessage()"><i class='bx bx-send'></i></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- === SECTION 4: SETTINGS === -->
+      <section id="settings-section" class="content-section" style="display: none;">
+         <div class="settings-container">
+          <div class="setting-group">
+            <h3>Profile Settings</h3>
+            <div class="input_box">
+              <label>Full Name</label>
+              <input type="text" value="User Name" class="input-field-light">
+            </div>
+            <div class="input_box">
+              <label>Email Address</label>
+              <input type="email" value="user@example.com" class="input-field-light">
+            </div>
+          </div>
+          <div class="setting-group">
+            <h3>Security</h3>
+            <div class="input_box">
+              <label>Current Password</label>
+              <input type="password" placeholder="********" class="input-field-light">
+            </div>
+            <div class="input_box">
+              <label>New Password</label>
+              <input type="password" placeholder="********" class="input-field-light">
+            </div>
+          </div>
+          <button class="save-settings-btn">Save Changes</button>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- === ADD ROOM MODAL (Glassmorphism + Amenities) === -->
+  <div id="addRoomModal" class="modal-wrapper">
+    <span class="close-modal-btn" onclick="closeAddRoomModal()">&times;</span>
+    <div class="login_box" style="width: 500px;">
+      <div class="login-header"><span>Post Room</span></div>
+      <form onsubmit="addNewRoom(event)">
+        <!-- Title -->
+        <div class="input_box">
+          <input type="text" id="newRoomTitle" class="input-field" required>
+          <label class="label">Room Title</label>
+          <i class="bx bx-home icon"></i>
+        </div>
+        <!-- Address -->
+        <div class="input_box">
+          <input type="text" id="newRoomAddress" class="input-field" required>
+          <label class="label">Address (City, Street)</label>
+          <i class="bx bx-map icon"></i>
+        </div>
+        <!-- Price -->
+        <div class="input_box">
+          <input type="number" id="newRoomPrice" class="input-field" required>
+          <label class="label">Price ($/month)</label>
+          <i class="bx bx-dollar icon"></i>
+        </div>
+        
+        <!-- Amenities Selection -->
+        <div style="margin-bottom: 20px; color: white;">
+          <p style="margin-bottom: 10px; font-size: 0.9rem;">Select Amenities:</p>
+          <div style="display: flex; gap: 15px;">
+            <label><input type="checkbox" id="checkWifi" value="wifi"> Wi-Fi</label>
+            <label><input type="checkbox" id="checkAc" value="ac"> AC</label>
+            <label><input type="checkbox" id="checkGym" value="gym"> Gym</label>
+          </div>
+        </div>
+
+        <!-- Image -->
+        <div class="input_box">
+          <input type="text" id="newRoomImage" class="input-field" value="hero.png" required>
+          <label class="label">Image URL</label>
+          <i class="bx bx-image icon"></i>
+        </div>
+        
+        <div class="input_box">
+          <input type="submit" class="input-submit" value="Publish">
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- === ROOM DETAILS & MAP MODAL === -->
+  <div id="roomDetailsModal" class="modal-wrapper">
+    <span class="close-modal-btn" onclick="closeDetailsModal()">&times;</span>
+    <div class="login_box" style="width: 800px; padding: 2rem;">
+      <div class="details-layout">
+        
+        <!-- Left Side: Info -->
+        <div class="details-info">
+          <h2 id="detailTitle" style="color:white; margin-bottom:10px;">Room Title</h2>
+          <p id="detailAddress" style="color:#ddd; margin-bottom:20px;">Address</p>
+          
+          <div class="distance-calculator">
+            <h4 style="color:white; margin-bottom:10px;">Distance to College</h4>
+            <div class="input_box" style="margin:0 0 10px 0;">
+              <input type="text" id="collegeAddress" class="input-field" placeholder="College Name..." required>
+              <i class="bx bx-school icon"></i>
+            </div>
+            <button class="input-submit" onclick="calculateDistance()" style="height:40px;">Calculate</button>
+            <p id="distanceResult" style="color:#f39c12; font-weight:bold; margin-top:10px;"></p>
+          </div>
+
+          <!-- SCHEDULING SECTION -->
+          <div class="scheduling-section" style="margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 15px;">
+             <h4 style="color:white; margin-bottom: 10px;">Schedule a Visit</h4>
+             <div class="input_box" style="margin: 0 0 10px 0;">
+               <input type="datetime-local" id="visitDate" class="input-field" style="color-scheme: dark; padding-left: 15px;">
+             </div>
+             <button class="input-submit" onclick="requestVisit()" style="height: 40px; background-color: #27ae60; color: white;">Request Visit</button>
+          </div>
+
+        </div>
+        
+        <!-- Right Side: Map -->
+        <div class="details-map">
+          <div id="map"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Dashboard Script -->
+  <script src="dashboard.js"></script>
+</body>
+</html>

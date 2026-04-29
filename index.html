@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EduRoom Navigator</title>
+  <link rel="stylesheet" href="style.css"/>
+  <!-- Boxicons for icons -->
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">EduRoom Navigator</div>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+      </ul>
+      <button class="login-btn" onclick="openModal('login')">Login</button>
+    </nav>
+  </header>
+
+  <!-- Hero/Home Section -->
+  <section id="home" class="hero-section">
+    <div class="hero-overlay">
+      <div class="hero-content">
+        <button class="hero-login-btn" onclick="openModal('login')">Login</button>
+        <h1>Find the Perfect Room Near You</h1>
+        <p>Your home away from home, made easy to find and affordable.</p>
+        <a href="#gallery" class="cta-button">Explore Rooms</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="section about-section">
+    <div class="container">
+      <div class="about-header">
+        <h2>About Us</h2>
+        <p class="subtitle">Bridging the gap between comfort and affordability.</p>
+      </div>
+
+      <div class="about-grid">
+        <!-- Text Content -->
+        <div class="about-text">
+          <h3>Our Mission</h3>
+          <p>
+            At <strong>EduRoom Navigator</strong>, we understand that finding the right accommodation is the first step toward academic and professional success. Our platform connects students and professionals with trusted landlords, offering a curated list of affordable, safe, and convenient rooms near major institutions.
+          </p>
+          <div class="stats-row">
+            <div class="stat-item">
+              <span class="stat-num">500+</span>
+              <span class="stat-desc">Rooms Listed</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-num">1k+</span>
+              <span class="stat-desc">Happy Tenants</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Founder Profile Cards -->
+        <div class="about-founder">
+
+          <!-- Founder 1 -->
+          <div class="founder-card">
+            <div class="founder-img">
+              <img src="founder.jpeg" alt="Sejal Singh">
+            </div>
+            <div class="founder-info">
+              <h3>Sejal Singh</h3>
+              <span class="position">Founder & CEO</span>
+              <p>"I started EduRoom to ensure no student ever has to compromise on their living standards due to lack of information."</p>
+              <!-- keep mail handler as in original file -->
+              <a href="mailto:sejalsingh8601@gmail.com" class="founder-contact">
+                <i class='bx bx-envelope'></i> Email Me
+              </a>
+            </div>
+          </div>
+
+          <!-- Founder 2 (NEW) -->
+          <div class="founder-card">
+            <div class="founder-img">
+              <img src="founder2.jpeg" alt="Srishti Rai">
+            </div>
+            <div class="founder-info">
+              <h3>Srishti Rai</h3>
+              <span class="position">Co-Founder</span>
+              <p>"Our mission is to make student accommodation simple, safe, and accessible for everyone."</p>
+              <a href="mailto:srishtirai@gmail.com" class="founder-contact">
+                <i class='bx bx-envelope'></i> Email Me
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section id="gallery" class="section">
+    <div class="container">
+      <h2>Featured Rooms</h2>
+      <p class="section-subtitle">Hand-picked accommodations just for you.</p>
+      
+      <div class="gallery-grid">
+        <!-- Room Card 1 -->
+        <div class="gallery-card">
+          <img src="room1.jpg" alt="Modern Studio">
+          <div class="card-overlay">
+            <h3>Modern Studio</h3>
+            <p>Near City Center • $450/mo</p>
+            <button onclick="openModal('login')">View Details</button>
+          </div>
+        </div>
+
+        <!-- Room Card 2 -->
+        <div class="gallery-card">
+          <img src="room2.jpg" alt="Cozy Apartment">
+          <div class="card-overlay">
+            <h3>Cozy Apartment</h3>
+            <p>2 BHK Shared • $300/mo</p>
+            <button onclick="openModal('login')">View Details</button>
+          </div>
+        </div>
+
+        <!-- Room Card 3 -->
+        <div class="gallery-card">
+          <img src="room3.jpg" alt="Student Dorm">
+          <div class="card-overlay">
+            <h3>Student Dorm</h3>
+            <p>Campus View • $200/mo</p>
+            <button onclick="openModal('login')">View Details</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Us Section (Formspree) -->
+  <section id="contact" class="section contact-section">
+    <div class="container">
+      <h2>Get In Touch</h2>
+      <p class="section-subtitle">Have questions? We are here to help.</p>
+      
+      <div class="contact-wrapper">
+        <!-- Replace YOUR_FORM_ID with your actual Formspree ID -->
+        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="contact-form">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" name="name" placeholder="John Doe" required />
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="john@example.com" required />
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea name="message" rows="5" placeholder="How can we help you?" required></textarea>
+          </div>
+          <button type="submit" class="send-btn">Send Message <i class='bx bx-paper-plane'></i></button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      
+      <div class="footer-col">
+        <h3>EduRoom Navigator</h3>
+        <p>Simplifying the search for your perfect home away from home.</p>
+      </div>
+
+      <div class="footer-col">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3>Contact Founders</h3>
+        <p><i class='bx bx-user'></i> Sejal Singh</p>
+        <p><i class='bx bx-envelope'></i> <a href="mailto:sejalsingh8601@gmail.com">sejalsingh8601@gmail.com</a></p>
+
+        <p style="margin-top:10px;"><i class='bx bx-user'></i> Srishti Rai</p>
+        <p><i class='bx bx-envelope'></i> <a href="mailto:srishtirai@gmail.com">srishtirai@gmail.com</a></p>
+
+        <div class="social-links" style="margin-top:8px;">
+          <a href="#"><i class='bx bxl-linkedin'></i></a>
+          <a href="#"><i class='bx bxl-twitter'></i></a>
+          <a href="#"><i class='bx bxl-instagram'></i></a>
+        </div>
+      </div>
+
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 EduRoom Navigator. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Unified Authentication Modal -->
+  <div id="authModal" class="modal">
+    <span class="close-modal-btn" onclick="closeModal()">&times;</span>
+    
+    <!-- Login Box -->
+    <div class="login_box" id="login-box">
+      <div class="login-header"><span>Login</span></div>
+      <form onsubmit="handleLogin(event)">
+        <div class="input_box">
+          <input type="email" id="loginEmail" class="input-field" required>
+          <label for="loginEmail" class="label">Email</label>
+          <i class="bx bx-envelope icon"></i>
+        </div>
+        <div class="input_box">
+          <input type="password" id="loginPassword" class="input-field" required>
+          <label for="loginPassword" class="label">Password</label>
+          <i class="bx bx-lock-alt icon"></i>
+        </div>
+        <div class="remember-forgot">
+          <div class="remember-me">
+            <input type="checkbox" id="remember">
+            <label for="remember">Remember me</label>
+          </div>
+          <div class="forgot">
+            <a href="#">Forgot password?</a>
+          </div>
+        </div>
+        <div class="input_box">
+          <input type="submit" class="input-submit" value="Login">
+        </div>
+        <div class="register">
+          <span>Don't have an account? <a href="#" onclick="switchView('signup')">Register</a></span>
+        </div>
+      </form>
+    </div>
+
+    <!-- Register Box (Hidden) -->
+    <div class="login_box" id="register-box" style="display: none;">
+      <div class="login-header"><span>Register</span></div>
+      <form onsubmit="handleSignup(event)">
+        <div class="input_box">
+          <input type="text" id="signupName" class="input-field" required>
+          <label for="signupName" class="label">Full Name</label>
+          <i class="bx bx-user icon"></i>
+        </div>
+        <div class="input_box">
+          <input type="email" id="signupEmail" class="input-field" required>
+          <label for="signupEmail" class="label">Email</label>
+          <i class="bx bx-envelope icon"></i>
+        </div>
+        <div class="input_box">
+          <input type="password" id="signupPassword" class="input-field" required>
+          <label for="signupPassword" class="label">Password</label>
+          <i class="bx bx-lock-alt icon"></i>
+        </div>
+        <div class="input_box">
+          <input type="submit" class="input-submit" value="Sign Up">
+        </div>
+        <div class="register">
+          <span>Already have an account? <a href="#" onclick="switchView('login')">Login</a></span>
+        </div>
+      </form>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
